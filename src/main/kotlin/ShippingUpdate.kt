@@ -40,18 +40,38 @@ class DeliveredUpdate(var shipment: Shipment, override var timeStamp: Long) : Sh
         shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$"  )
     }
 }
-class DelayedUpdate(override var previousStatus: String, override var newStatus: String, override var timeStamp: Long) : ShippingUpdate{
-
+class DelayedUpdate(var shipment: Shipment, override var timeStamp: Long, var newExpected: Long) : ShippingUpdate{
+    override var newStatus = "delayed"
+    override var previousStatus = shipment.status
+    init{
+        shipment.status = newStatus
+        shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$")
+        shipment.expectedDeliveryDateTimeStamp = newExpected
+    }
 }
 
-class LostUpdate(override var previousStatus: String, override var newStatus: String, override var timeStamp: Long) : ShippingUpdate{
-
+class LostUpdate(var shipment: Shipment, override var timeStamp: Long) : ShippingUpdate{
+    override var newStatus = "lost"
+    override var previousStatus = shipment.status
+    init{
+        shipment.status = newStatus
+        shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$"  )
+    }
 }
 
-class CanceledUpdate(override var previousStatus: String, override var newStatus: String, override var timeStamp: Long) : ShippingUpdate{
-
+class CanceledUpdate(var shipment: Shipment, override var timeStamp: Long) : ShippingUpdate{
+    override var newStatus = "canceled"
+    override var previousStatus = shipment.status
+    init{
+        shipment.status = newStatus
+        shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$"  )
+    }
 }
 
-class NoteAddedUpdate(override var previousStatus: String, override var newStatus: String, override var timeStamp: Long) : ShippingUpdate{
-
+class NoteAddedUpdate(var shipment: Shipment, override var timeStamp: Long, var note: String) : ShippingUpdate{
+    override var newStatus = shipment.status
+    override var previousStatus = ""
+    init{
+        shipment.addNote(note)
+    }
 }
