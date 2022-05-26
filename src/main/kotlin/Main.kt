@@ -76,6 +76,9 @@ fun App() {
                 TextField(searchVal, onValueChange = {searchVal = it}, singleLine = true, modifier = Modifier.weight(1f))
                 Button({
                     TrackingSimulator.findShipment(searchVal)?.let { it1 -> viewHelpers.add(TrackerViewHelper(it1)) }
+                    if(TrackingSimulator.findShipment(searchVal) == null){
+                        searchVal = "Invalid. Try again."
+                    }
                 }) {
                     Text("Search")
                 }
