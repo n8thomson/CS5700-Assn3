@@ -31,12 +31,12 @@ fun Message(message: String, removeMessage: () -> Unit) {
 }
 
 @Composable
-fun ShipmentDisplay(shipmentId: String, removeMessage: () -> Unit) {
+fun ShipmentView(viewHelper: TrackerViewHelper, removeMessage: () -> Unit) {
     Row {
         Surface(elevation = 1.dp) {
-            Row(modifier = Modifier.padding(16.dp)) {
+            Row(modifier = Modifier.fillMaxWidth()) {
                 Column {
-                    Text("Tracking Shipment: $shipmentId")
+                    Text("Tracking Shipment: ")
                 }
 
                 Column {
@@ -54,25 +54,24 @@ fun App() {
 
     rememberCoroutineScope().launch { TrackingSimulator.runSimulation() }
     MaterialTheme {
-//        var numColumns by remember { mutableStateOf(0) }
         var searchVal by remember { mutableStateOf("") }
-        val displayed = remember { mutableStateListOf<String>() }
+        val viewHelpers = remember { mutableStateListOf<TrackerViewHelper>() }
         Column {
 
             Row {
                 TextField(searchVal, onValueChange = {searchVal = it})
                 Button({
-                    displayed.add(searchVal)
+                    TrackingSimulator.findShipment(searchVal)?.let { it1 -> viewHelpers.add(TrackerViewHelper(it1)) }
                 }) {
                     Text("Search")
                 }
             }
             Row {
                 LazyColumn {
-                    items(displayed, key = {
+                    items(viewHelpers, key = {
                         it
-                    }) { searchVal ->
-                        ShipmentDisplay(searchVal) { displayed.remove(searchVal) }
+                    }) { viewHelper ->
+                        ShipmentView(viewHelper) { viewHelpers.remove(viewHelper) }
                     }
                 }
             }

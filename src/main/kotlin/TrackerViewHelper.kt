@@ -3,7 +3,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
-class TrackerViewHelper: Observer {
+class TrackerViewHelper(var shipment: Shipment): Observer {
     var shipmentId by mutableStateOf("")
         private set;
     var shipmentTotes = mutableStateListOf<String>()
@@ -14,22 +14,14 @@ class TrackerViewHelper: Observer {
         private set;
     var shipmentStatus by mutableStateOf("")
         private set;
-    var numSecondsPassed by mutableStateOf(0)
 
-    var shipment: Shipment = Shipment(shipmentStatus, shipmentId)
+
     init {
         shipment.addObserver(this)
     }
 
-    override fun notify(numSecondsPassed: Int) {
-        this.numSecondsPassed = numSecondsPassed
+    override fun notify(shipmentStatus: String) {
+        this.shipmentStatus = shipmentStatus
     }
 
-    suspend fun start() {
-        shipment.start()
-    }
-
-    fun stop() {
-        shipment.stop()
-    }
 }

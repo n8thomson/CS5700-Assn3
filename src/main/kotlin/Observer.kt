@@ -1,3 +1,3 @@
 interface Observer {
-    fun notify(numSecondsPassed: Int)
+    fun notify(shipmentStatus: String)
 }

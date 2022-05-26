@@ -12,7 +12,6 @@ class Shipment(status: String, id: String): Observable {
     var currentLocation: String = "Unknown"
 
     private val observers = mutableListOf<Observer>()
-    private var numSecondsPassed = 0
     private var running = false
     init {
         this.status = status
@@ -37,14 +36,13 @@ class Shipment(status: String, id: String): Observable {
     }
 
     private fun notifyObservers() {
-        observers.forEach { it.notify(numSecondsPassed)}
+        observers.forEach { it.notify(status)}
     }
 
     suspend fun start() {
         running = true;
         while (running) {
             delay(1000)
-            numSecondsPassed += 1
             notifyObservers()
         }
     }
