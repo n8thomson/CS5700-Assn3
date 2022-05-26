@@ -16,7 +16,7 @@ class TrackerViewHelper: Observer {
         private set;
     var numSecondsPassed by mutableStateOf(0)
 
-    var shipment: Shipment = Shipment(shipmentStatus, shipmentId, shipmentUpdateHistory, 0L)
+    var shipment: Shipment = Shipment(shipmentStatus, shipmentId)
     init {
         shipment.addObserver(this)
     }

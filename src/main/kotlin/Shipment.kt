@@ -1,15 +1,15 @@
 import kotlinx.coroutines.delay
 import androidx.compose.runtime.mutableStateListOf
 
-class Shipment(status: String, id: String, updateHistory: MutableList<ShippingUpdate>, expectedDeliveryDateTimeStamp: Long): Observable {
+class Shipment(status: String, id: String): Observable {
     var status: String = ""
     var id: String = ""
     var notes: MutableList<String> = mutableStateListOf()
         private set;
-    var updateHistory: MutableList<ShippingUpdate> = mutableStateListOf()
+    var updateHistory: MutableList<String> = mutableStateListOf()
         private set;
     var expectedDeliveryDateTimeStamp: Long = 0L
-    var currentLocation: String = ""
+    var currentLocation: String = "Unknown"
 
     private val observers = mutableListOf<Observer>()
     private var numSecondsPassed = 0
@@ -17,15 +17,14 @@ class Shipment(status: String, id: String, updateHistory: MutableList<ShippingUp
     init {
         this.status = status
         this.id = id
-        this.updateHistory = updateHistory
-        this.expectedDeliveryDateTimeStamp = expectedDeliveryDateTimeStamp
+
     }
 
     fun addNote(note: String) {
         this.notes.add(note)
     }
 
-    fun addUpdate(update: ShippingUpdate) {
+    fun addUpdate(update: String) {
         this.updateHistory.add(update)
     }
 

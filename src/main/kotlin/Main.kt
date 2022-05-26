@@ -14,22 +14,7 @@ import androidx.compose.ui.window.application
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-@Composable
-fun ColumnWithTwoButtons() {
-    Column {
-        Button(
-            onClick = { println("hello, world!") },
-        ) {
 
-            Text("I am a button")
-        }
-        Button(
-            onClick = { println("hello, world!") },
-        ) {
-            Text("I am a button")
-        }
-    }
-}
 
 @Composable
 fun Message(message: String, removeMessage: () -> Unit) {
