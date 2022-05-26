@@ -8,7 +8,7 @@ class Shipment(status: String, id: String): Observable {
             notifyObservers()
         }
     var id: String = ""
-        set(value) {
+        private set(value) {
             field = value
             notifyObservers()
         }
@@ -57,7 +57,7 @@ class Shipment(status: String, id: String): Observable {
     }
 
     private fun notifyObservers() {
-        observers.forEach { it.notify(status)}
+        observers.forEach { it.notify(id, status, notes, updateHistory, expectedDeliveryDateTimeStamp, currentLocation)}
     }
 
 

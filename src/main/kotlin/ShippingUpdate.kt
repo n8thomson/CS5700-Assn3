@@ -19,7 +19,7 @@ class ShippedUpdate(var shipment: Shipment, override var timeStamp: Long, var ex
     override var previousStatus = shipment.status
     init{
         shipment.status = newStatus
-        shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$"  )
+        shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$".dropLast(2)  )
         shipment.expectedDeliveryDateTimeStamp = expectedArrival
     }
 }
@@ -37,7 +37,7 @@ class DeliveredUpdate(var shipment: Shipment, override var timeStamp: Long) : Sh
     override var previousStatus = shipment.status
     init{
         shipment.status = newStatus
-        shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$"  )
+        shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$".dropLast(2)  )
     }
 }
 class DelayedUpdate(var shipment: Shipment, override var timeStamp: Long, var newExpected: Long) : ShippingUpdate{
@@ -45,7 +45,7 @@ class DelayedUpdate(var shipment: Shipment, override var timeStamp: Long, var ne
     override var previousStatus = shipment.status
     init{
         shipment.status = newStatus
-        shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$")
+        shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$".dropLast(2))
         shipment.expectedDeliveryDateTimeStamp = newExpected
     }
 }
@@ -55,7 +55,7 @@ class LostUpdate(var shipment: Shipment, override var timeStamp: Long) : Shippin
     override var previousStatus = shipment.status
     init{
         shipment.status = newStatus
-        shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$"  )
+        shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$".dropLast(2)  )
     }
 }
 
@@ -64,7 +64,7 @@ class CanceledUpdate(var shipment: Shipment, override var timeStamp: Long) : Shi
     override var previousStatus = shipment.status
     init{
         shipment.status = newStatus
-        shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$"  )
+        shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$".dropLast(2)  )
     }
 }
 

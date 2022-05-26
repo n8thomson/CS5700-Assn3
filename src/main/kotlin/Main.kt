@@ -13,7 +13,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-
+import java.time.Instant
 
 
 @Composable
@@ -32,11 +32,25 @@ fun Message(message: String, removeMessage: () -> Unit) {
 
 @Composable
 fun ShipmentView(viewHelper: TrackerViewHelper, removeMessage: () -> Unit) {
-    Row {
+    Row(Modifier.fillMaxWidth()) {
         Surface(elevation = 1.dp) {
-            Row(modifier = Modifier.fillMaxWidth()) {
-                Column {
-                    Text("Tracking Shipment: ${viewHelper.shipmentStatus}")
+            Row(Modifier.padding(8.dp).fillMaxWidth()) {
+                Column(Modifier.weight(1f)) {
+                    Text("Tracking Shipment: ${viewHelper.shipmentId}")
+                    Text("Status: ${viewHelper.shipmentStatus}")
+                    Text("Location: ${viewHelper.shipmentLocation}")
+
+                    Text("Expected Delivery: ${
+                        Instant.ofEpochMilli(viewHelper.expectedShipmentDeliveryDate)}".dropLast(2))
+                    Text("Shipment Updates: ")
+                    for (item in viewHelper.shipmentUpdateHistory) {
+                        Text(item)
+                    }
+                    Text("Notes: ")
+                    for (item in viewHelper.shipmentNotes) {
+                        Text(item)
+                    }
+
                 }
 
                 Column {
@@ -56,17 +70,17 @@ fun App() {
     MaterialTheme {
         var searchVal by remember { mutableStateOf("") }
         val viewHelpers = remember { mutableStateListOf<TrackerViewHelper>() }
-        Column {
+        Column (Modifier.fillMaxWidth()){
 
-            Row {
-                TextField(searchVal, onValueChange = {searchVal = it})
+            Row (Modifier.fillMaxWidth()){
+                TextField(searchVal, onValueChange = {searchVal = it}, singleLine = true, modifier = Modifier.weight(1f))
                 Button({
                     TrackingSimulator.findShipment(searchVal)?.let { it1 -> viewHelpers.add(TrackerViewHelper(it1)) }
                 }) {
                     Text("Search")
                 }
             }
-            Row {
+            Row (Modifier.fillMaxWidth()){
                 LazyColumn {
                     items(viewHelpers, key = {
                         it
