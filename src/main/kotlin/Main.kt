@@ -36,7 +36,7 @@ fun ShipmentView(viewHelper: TrackerViewHelper, removeMessage: () -> Unit) {
         Surface(elevation = 1.dp) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 Column {
-                    Text("Tracking Shipment: ")
+                    Text("Tracking Shipment: ${viewHelper.shipmentStatus}")
                 }
 
                 Column {

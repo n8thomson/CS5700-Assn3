@@ -3,20 +3,41 @@ import androidx.compose.runtime.mutableStateListOf
 
 class Shipment(status: String, id: String): Observable {
     var status: String = ""
+        set(value) {
+            field = value
+            notifyObservers()
+        }
     var id: String = ""
+        set(value) {
+            field = value
+            notifyObservers()
+        }
     var notes: MutableList<String> = mutableStateListOf()
-        private set;
+        private set(value) {
+            field = value
+            notifyObservers()
+        }
     var updateHistory: MutableList<String> = mutableStateListOf()
-        private set;
+        private set(value) {
+            field = value
+            notifyObservers()
+        }
     var expectedDeliveryDateTimeStamp: Long = 0L
+        set(value) {
+            field = value
+            notifyObservers()
+        }
     var currentLocation: String = "Unknown"
+        set(value) {
+            field = value
+            notifyObservers()
+        }
 
     private val observers = mutableListOf<Observer>()
-    private var running = false
+
     init {
         this.status = status
         this.id = id
-
     }
 
     fun addNote(note: String) {
@@ -39,15 +60,5 @@ class Shipment(status: String, id: String): Observable {
         observers.forEach { it.notify(status)}
     }
 
-    suspend fun start() {
-        running = true;
-        while (running) {
-            delay(1000)
-            notifyObservers()
-        }
-    }
 
-    fun stop() {
-        running = false
-    }
 }

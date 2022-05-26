@@ -18,6 +18,8 @@ class TrackerViewHelper(var shipment: Shipment): Observer {
 
     init {
         shipment.addObserver(this)
+        shipmentId = shipment.id
+        shipmentStatus = shipment.status
     }
 
     override fun notify(shipmentStatus: String) {
