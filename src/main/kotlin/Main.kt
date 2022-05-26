@@ -84,7 +84,7 @@ fun App() {
                 }
             }
             Row (Modifier.fillMaxWidth()){
-                LazyColumn {
+                LazyColumn(reverseLayout = true) {
                     items(viewHelpers, key = {
                         it
                     }) { viewHelper ->
