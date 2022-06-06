@@ -67,7 +67,7 @@ fun ShipmentView(viewHelper: TrackerViewHelper, removeMessage: () -> Unit) {
 @Composable
 fun App() {
 
-    rememberCoroutineScope().launch { TrackingSimulator.runSimulation() }
+    rememberCoroutineScope().launch { TrackingServer.runServer() }
     MaterialTheme {
         var searchVal by remember { mutableStateOf("") }
         val viewHelpers = remember { mutableStateListOf<TrackerViewHelper>() }
@@ -76,8 +76,8 @@ fun App() {
             Row (Modifier.fillMaxWidth()){
                 TextField(searchVal, onValueChange = {searchVal = it}, singleLine = true, modifier = Modifier.weight(1f))
                 Button({
-                    TrackingSimulator.findShipment(searchVal)?.let { it1 -> viewHelpers.add(TrackerViewHelper(it1)) }
-                    if(TrackingSimulator.findShipment(searchVal) == null){
+                    TrackingServer.findShipment(searchVal)?.let { it1 -> viewHelpers.add(TrackerViewHelper(it1)) }
+                    if(TrackingServer.findShipment(searchVal) == null){
                         searchVal = "Invalid. Try again."
                     }
                 }) {
