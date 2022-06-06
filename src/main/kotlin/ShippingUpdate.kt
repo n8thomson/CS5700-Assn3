@@ -6,10 +6,11 @@ interface ShippingUpdate {
     var timeStamp: Long
 }
 
-class CreatedUpdate(var id: String, override var timeStamp: Long) : ShippingUpdate{
+class CreatedUpdate(var id: String, override var timeStamp: Long, type: String) : ShippingUpdate{
     override var newStatus = "created"
     override var previousStatus = ""
-    var newShipment = Shipment(newStatus, id)
+
+    var newShipment = ShipmentFactory.createShipment("created", id, timeStamp, type)
         private set;
 
 }
@@ -21,6 +22,9 @@ class ShippedUpdate(var shipment: Shipment, override var timeStamp: Long, var ex
         shipment.status = newStatus
         shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$".dropLast(2)  )
         shipment.expectedDeliveryDateTimeStamp = expectedArrival
+        if (!shipment.isValid())(
+                shipment.addUpdate(shipment.errorMessage)
+        )
     }
 }
 
@@ -47,6 +51,7 @@ class DelayedUpdate(var shipment: Shipment, override var timeStamp: Long, var ne
         shipment.status = newStatus
         shipment.addUpdate("Shipment went from $previousStatus to $newStatus at ${Instant.ofEpochMilli(timeStamp)}$".dropLast(2))
         shipment.expectedDeliveryDateTimeStamp = newExpected
+
     }
 }
 

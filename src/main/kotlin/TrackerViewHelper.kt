@@ -16,6 +16,8 @@ class TrackerViewHelper(var shipment: Shipment): Observer {
         private set;
     var shipmentLocation by mutableStateOf("")
         private set;
+    var shipmentType by mutableStateOf("")
+        private set;
 
 
     init {
@@ -26,17 +28,17 @@ class TrackerViewHelper(var shipment: Shipment): Observer {
         shipmentUpdateHistory = shipment.updateHistory
         expectedShipmentDeliveryDate = shipment.expectedDeliveryDateTimeStamp
         shipmentLocation = shipment.currentLocation
-
+        shipmentType = shipment.type
     }
 
-    override fun notify(shipmentId: String, shipmentStatus: String, shipmentNotes: MutableList<String>, shipmentUpdateHistory: MutableList<String>, expectedShipmentDeliveryDate: Long, shipmentLocation: String) {
+    override fun notify(shipmentId: String, shipmentStatus: String, shipmentNotes: MutableList<String>, shipmentUpdateHistory: MutableList<String>, expectedShipmentDeliveryDate: Long, shipmentLocation: String, shipmentType: String) {
         this.shipmentId = shipmentId
         this.shipmentStatus = shipmentStatus
         this.shipmentNotes = shipmentNotes
         this.shipmentUpdateHistory = shipmentUpdateHistory
         this.expectedShipmentDeliveryDate = expectedShipmentDeliveryDate
         this.shipmentLocation = shipmentLocation
-
+        this.shipmentType = shipmentType
     }
 
 }

@@ -17,7 +17,7 @@ class TrackingSimulator {
                     println(">  " + it)
                     val item = it.split(",")
                     when (item[0]){
-                        "created" -> {addShipment(CreatedUpdate(item[1], item[2].toLong()).newShipment)}
+                        "created" -> {addShipment(CreatedUpdate(item[1], item[2].toLong(), item[3]).newShipment)}
                         "shipped" -> {
                             findShipment(item[1])?.let { it1 -> ShippedUpdate(it1, item[2].toLong(), item[3].toLong()) }
                         }

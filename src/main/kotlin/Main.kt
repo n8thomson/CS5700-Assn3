@@ -38,6 +38,7 @@ fun ShipmentView(viewHelper: TrackerViewHelper, removeMessage: () -> Unit) {
                 Column(Modifier.weight(1f)) {
                     Text("Tracking Shipment: ${viewHelper.shipmentId}")
                     Text("Status: ${viewHelper.shipmentStatus}")
+                    Text("Type: ${viewHelper.shipmentType}")
                     Text("Location: ${viewHelper.shipmentLocation}")
 
                     Text("Expected Delivery: ${
